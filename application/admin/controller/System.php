@@ -72,7 +72,6 @@ class System extends Base
         $this->assign('config',$config);//当前配置项
         return $this->fetch();
     }
-
     /**
      * 会员中心自定义
      * @return mixed
@@ -127,7 +126,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
         }
 	}
 	
-	public function bonus_set(){
+	public function bonus_set(){//奖金池配置
 		if($_POST){
 		$inc_type = input('inc_type/s');
 		$bonus_pool =input('bonus_pool/s');
@@ -136,17 +135,17 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
 		$ranking3 = input('ranking3/s');
 		$ranking4 = input('ranking4/s');
 		$data = array(
-			'1'=>array('bonus_pool'=>$bonus_pool),
-			'2'=>array('ranking1' =>$ranking1),
-			'3'=>array('ranking2' =>$ranking2),
-			'4'=>array('ranking3' =>$ranking3),
-			'5'=>array('ranking4' =>$ranking4)
+			'bonus_pool'=>$bonus_pool,
+			'ranking1' =>$ranking1,
+			'ranking2' =>$ranking2,
+			'ranking3' =>$ranking3,
+			'ranking4' =>$ranking4
 			);
-		/* foreach($data as $k =>$v){
-			// $updata = Db::query("update tp_config set value= ");
-			$this->success($k.'_'.$v,U('System/index'));
-		} */
-		
+		foreach($data as $k =>$v){
+			$updata = Db::query("update tp_config set value='$v' where inc_type='$inc_type' and name='$k'");
+			// isset("$k",$v);
+		}
+		$this->success("操作成功",U('System/cleanCache'));
 		}
 	}
         
@@ -269,9 +268,9 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
             clearCache();
 			$quick = I('quick',0);
 			if($quick == 1){
-				$script = "<script>parent.layer.msg('缓存清除成功', {time:3000,icon: 1});window.parent.location.reload();</script>";
+				$script = "<script>parent.layer.msg('操作成功', {time:3000,icon: 1});window.parent.location.reload();</script>";
 			}else{
-				$script = "<script>parent.layer.msg('缓存清除成功', {time:3000,icon: 1});window.location='/index.php?m=Admin&c=Index&a=welcome';</script>";
+				$script = "<script>parent.layer.msg('操作成功', {time:3000,icon: 1});window.location='/index.php?m=Admin&c=Index&a=welcome';</script>";
 			}
            	exit($script);
         }
@@ -546,7 +545,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
     public function truncate_demo_data(){
         /*
         $result = Db::query('show tables');        
-        $prefix   = \think\config::get('database.prefix');
+        $prefix   = \think\ ::get('database.prefix');
         $database = \think\config::get('database.database');
         $tables = array();        
         foreach($result as $key => $val){
