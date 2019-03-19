@@ -126,6 +126,29 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
                 $this->success("操作成功",U('System/index',array('inc_type'=>$inc_type)));
         }
 	}
+	
+	public function bonus_set(){
+		if($_POST){
+		$inc_type = input('inc_type/s');
+		$bonus_pool =input('bonus_pool/s');
+		$ranking1 = input('ranking1/s');
+		$ranking2 = input('ranking2/s');
+		$ranking3 = input('ranking3/s');
+		$ranking4 = input('ranking4/s');
+		$data = array(
+			'1'=>array('bonus_pool'=>$bonus_pool),
+			'2'=>array('ranking1' =>$ranking1),
+			'3'=>array('ranking2' =>$ranking2),
+			'4'=>array('ranking3' =>$ranking3),
+			'5'=>array('ranking4' =>$ranking4)
+			);
+		/* foreach($data as $k =>$v){
+			// $updata = Db::query("update tp_config set value= ");
+			$this->success($k.'_'.$v,U('System/index'));
+		} */
+		
+		}
+	}
         
        /**
         * 自定义导航
