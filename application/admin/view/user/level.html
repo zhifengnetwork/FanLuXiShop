@@ -82,7 +82,7 @@
 						<input type="text" name="discount" value="{$info.discount}"  class="input-txt" onkeyup="this.value=this.value.replace(/[^\d]/g,'')"><span>元</span>
 					</div>
                     <span class="err" id="err_amount"></span>
-                    <p class="notic">达到该等级，会员所需条件!直推人数等级为同等级。</p>
+                    <p class="notic">达到该等级，会员所需条件(三选一)!直推人数等级为同等级。</p>
                 </dd>
             </dl>
 			
@@ -93,9 +93,22 @@
                 <dd class="opt">
                     <input type="text" name="discount" value="{$info.discount}" id="discount" class="input-txt" onkeyup="this.value=this.value.replace(/[^\d]/g,'')">
                     <span>%</span>
-                    <p class="notic">返利单位为百分比，如输入90，表示该会员等级的用户分享商品原价的90%。</p>
+                    <p class="notic">返利单位为百分比，如输入10，表示该会员等级的用户分享商品原价的10%。</p>
                 </dd>
             </dl>
+			<dl class="row">
+			    <dt class="tit">
+			        直推奖励
+			    </dt>
+			    <dd class="opt">
+			        <select>
+						<option></option>
+					</select>
+					<input type="text" name="discount" value="{$info.discount}" id="discount" class="input-txt" onkeyup="this.value=this.value.replace(/[^\d]/g,'')">
+			        <span>元</span>
+			        <p class="notic">直推一名达到一定等级获得奖励！</p>
+			    </dd>
+			</dl>
 			
             <dl class="row">
                 <dt class="tit">
