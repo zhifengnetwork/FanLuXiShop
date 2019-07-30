@@ -12,6 +12,9 @@ class Team extends Controller{
 
     //季度分红，每3月一次 ，2,5,8,11
     public function quarter_bonus(){
+		//$date = date('m-d');
+		//if(!in_array($date,['02-01','02-1','05-01','05-1','08-01','08-1','11-01','11-1']))return;
+
         $AgentPerformance = M('Agent_performance');
         $AgentPerformance->field('performance_id,user_id,team_per')->chunk(100,function($list){
 
@@ -32,7 +35,7 @@ class Team extends Controller{
                 }
                 $n = $QuarterBonus->where(['user_id'=>$v['user_id'],'year_m'=>date('Y-m')])->count();
                 if($n)continue;
-                $grade = $Share->where(['lower'=>['egt',$v['team_per']]])->order('lower desc')->value('grade');
+                $grade = $Share->where(['lower'=>['elt',$v['team_per']],'upper'=>['egt',$v['team_per']]])->order('lower desc')->value('rate');
                 if(!$grade)continue;
     
                 $price = floor($v['team_per'] * $grade)/100;
@@ -40,7 +43,7 @@ class Team extends Controller{
                 //找出用户的下级
                 $childlist = $AgentPerformance->alias('ap')->join('users u','ap.user_id=u.user_id','left')->field('ap.performance_id,ap.user_id,ap.team_per')->where('u.first_leader='.$v['user_id'])->select();
                 foreach($childlist as $v1){
-                    $grade = $Share->where(['lower'=>['egt',$v1['team_per']]])->order('lower desc')->value('grade');
+                    $grade = $Share->where(['lower'=>['elt',$v1['team_per']],'upper'=>['egt',$v1['team_per']]])->order('lower desc')->value('rate');
                     if(!$grade)continue;  
                     $price1 = floor($v1['team_per'] * $grade)/100;  
                     $price -= $price1;
