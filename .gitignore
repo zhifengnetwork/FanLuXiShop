@@ -10,3 +10,6 @@ public/upload/*
 cron.txt
 cron_team.sh
 *.sql
+*.php_read
+*.php_read
+*.php_read
